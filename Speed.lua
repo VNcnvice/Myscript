@@ -1,20 +1,23 @@
--- Script zVNcnvice | Fixed Version for Delta Mobile
+-- Script zVNcnvice | Full Version for Delta Mobile (Direct Execute)
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local ParentGui = game:GetService("CoreGui")
 
+-- Xóa GUI cũ nếu đã tồn tại
 if ParentGui:FindFirstChild("zVNcnvice_Menu") then
     ParentGui.zVNcnvice_Menu:Destroy()
 end
 
+-- Tạo ScreenGui chính
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "zVNcnvice_Menu"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.Parent = ParentGui
 
+-- Nút dấu '+' mở/đóng menu (Có thể kéo thả)
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Size = UDim2.new(0, 45, 0, 45)
 ToggleButton.Position = UDim2.new(0, 20, 0.3, 0)
@@ -32,6 +35,7 @@ local ToggleStroke = Instance.new("UIStroke", ToggleButton)
 ToggleStroke.Color = Color3.fromRGB(255, 255, 255)
 ToggleStroke.Thickness = 1.5
 
+-- Khung Menu Chính (Tông đen trắng, có thể kéo thả)
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 320, 0, 280)
 MainFrame.Position = UDim2.new(0.5, -160, 0.3, -140)
@@ -47,10 +51,12 @@ local MainStroke = Instance.new("UIStroke", MainFrame)
 MainStroke.Color = Color3.fromRGB(255, 255, 255)
 MainStroke.Thickness = 1.5
 
+-- Logic nút '+' ẩn/hiện menu
 ToggleButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
+-- Thanh tiêu đề
 local TopBar = Instance.new("Frame")
 TopBar.Size = UDim2.new(1, 0, 0, 35)
 TopBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
@@ -69,6 +75,7 @@ TitleLabel.Font = Enum.Font.SourceSansBold
 TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 TitleLabel.Parent = TopBar
 
+-- Nút chuyển Tab (Bản thân / Chính)
 local TabSelfBtn = Instance.new("TextButton")
 TabSelfBtn.Size = UDim2.new(0.5, 0, 0, 30)
 TabSelfBtn.Position = UDim2.new(0, 0, 0, 38)
@@ -89,6 +96,7 @@ TabMainBtn.TextSize = 12
 TabMainBtn.Font = Enum.Font.SourceSansBold
 TabMainBtn.Parent = MainFrame
 
+-- Container chứa nội dung các Tab
 local SelfContainer = Instance.new("ScrollingFrame")
 SelfContainer.Size = UDim2.new(1, -10, 1, -80)
 SelfContainer.Position = UDim2.new(0, 5, 0, 73)
@@ -106,6 +114,7 @@ MainContainer.ScrollBarThickness = 4
 MainContainer.Visible = false
 MainContainer.Parent = MainFrame
 
+-- Xử lý chuyển tab
 TabSelfBtn.MouseButton1Click:Connect(function()
     SelfContainer.Visible = true
     MainContainer.Visible = false
@@ -124,7 +133,10 @@ TabMainBtn.MouseButton1Click:Connect(function()
     TabSelfBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
 end)
 
--- TAB BẢN THÂN
+----------------------------------------------------------------
+-- TAB 1: BẢN THÂN (SELF)
+----------------------------------------------------------------
+
 local UserInfoLabel = Instance.new("TextLabel")
 UserInfoLabel.Size = UDim2.new(1, 0, 0, 25)
 UserInfoLabel.Position = UDim2.new(0, 0, 0, 5)
@@ -136,6 +148,7 @@ UserInfoLabel.Font = Enum.Font.SourceSansBold
 UserInfoLabel.TextXAlignment = Enum.TextXAlignment.Left
 UserInfoLabel.Parent = SelfContainer
 
+-- 1. Tốc độ chạy (WalkSpeed)
 local SpeedTitle = Instance.new("TextLabel")
 SpeedTitle.Size = UDim2.new(1, 0, 0, 20)
 SpeedTitle.Position = UDim2.new(0, 0, 0, 35)
@@ -201,6 +214,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
+-- 2. Nhảy liên tục (Infinite Jump)
 local InfJumpBtn = Instance.new("TextButton")
 InfJumpBtn.Size = UDim2.new(1, 0, 0, 30)
 InfJumpBtn.Position = UDim2.new(0, 0, 0, 95)
@@ -229,6 +243,7 @@ UserInputService.JumpRequest:Connect(function()
     end
 end)
 
+-- 3. Tàng hình (Invisibility)
 local InvisBtn = Instance.new("TextButton")
 InvisBtn.Size = UDim2.new(1, 0, 0, 30)
 InvisBtn.Position = UDim2.new(0, 0, 0, 135)
@@ -257,6 +272,7 @@ InvisBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+-- 4. Đi xuyên tường (Noclip)
 local NoclipBtn = Instance.new("TextButton")
 NoclipBtn.Size = UDim2.new(1, 0, 0, 30)
 NoclipBtn.Position = UDim2.new(0, 0, 0, 175)
@@ -289,7 +305,11 @@ RunService.Stepped:Connect(function()
     end
 end)
 
--- TAB CHÍNH
+----------------------------------------------------------------
+-- TAB 2: CHÍNH / UNIVERSAL (DÙNG CHO NHIỀU GAME)
+----------------------------------------------------------------
+
+-- 1. ESP Người chơi
 local EspBtn = Instance.new("TextButton")
 EspBtn.Size = UDim2.new(1, 0, 0, 30)
 EspBtn.Position = UDim2.new(0, 0, 0, 10)
@@ -362,6 +382,7 @@ EspBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+-- 2. Fling Người khác
 local FlingBtn = Instance.new("TextButton")
 FlingBtn.Size = UDim2.new(1, 0, 0, 30)
 FlingBtn.Position = UDim2.new(0, 0, 0, 50)
@@ -393,6 +414,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
+-- 3. Mở rộng Hitbox (Kèm thanh trượt 1-500)
 local HitboxBtn = Instance.new("TextButton")
 HitboxBtn.Size = UDim2.new(1, 0, 0, 30)
 HitboxBtn.Position = UDim2.new(0, 0, 0, 90)
@@ -480,6 +502,7 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
+-- 4. Fullbright
 local BrightBtn = Instance.new("TextButton")
 BrightBtn.Size = UDim2.new(1, 0, 0, 30)
 BrightBtn.Position = UDim2.new(0, 0, 0, 185)
@@ -504,6 +527,7 @@ BrightBtn.MouseButton1Click:Connect(function()
     lighting.GlobalShadows = not brightEnabled
 end)
 
+-- 5. Xóa sương mù (No Fog)
 local NoFogBtn = Instance.new("TextButton")
 NoFogBtn.Size = UDim2.new(1, 0, 0, 30)
 NoFogBtn.Position = UDim2.new(0, 0, 0, 225)
@@ -525,6 +549,9 @@ NoFogBtn.MouseButton1Click:Connect(function()
     lighting.FogEnd = noFogEnabled and 999999 or 1000
 end)
 
+----------------------------------------------------------------
+-- TÍNH NĂNG KÉO CO GIÃN MENU (RESIZE TỪ GÓC PHẢI DƯỚI)
+----------------------------------------------------------------
 local ResizeHandle = Instance.new("TextButton")
 ResizeHandle.Size = UDim2.new(0, 15, 0, 15)
 ResizeHandle.Position = UDim2.new(1, -15, 1, -15)
